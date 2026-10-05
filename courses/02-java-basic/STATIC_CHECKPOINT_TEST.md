@@ -387,6 +387,80 @@ registry2.printMembers();
 -- code
 ```
 
+예상결과) 실행 전 보이는 IntelliJ 빨간줄 오류 확인 등으로 작업하다 이상해서, 더 내려보니 실행 결과문이 정해져 있는것도 보여서..
+틀리게 하고 있는것 발견도 하고 해서 아예 다른 코드인 것을 인지하여 넘어감.
+
+검증) IntelliJ 검증 → 실패
+틀렸지만 현재 코드 기준 메서드에서 static 메서드를 써야 오류가 안나는데 해당 개념 추가 공부가 필요함.
+
+> Member (코드 변경 후)
+```java
+package checkTest;
+
+public class Member {
+
+    private String name;
+    private int memberNo;
+    private int attendCnt;
+    private static int sNo = 1;
+
+    public Member(String name) {
+        if(!name.isEmpty()) {
+            this.name = name;
+            this.memberNo = sNo;
+            sNo++;
+        }
+    }
+
+    public void attend() {
+        attendCnt++;
+    }
+
+    public void showMemberInfo() {
+        //System.out.println("이름 : " + name + ", 번호 : " + memberNo + ", 출석 횟수 : " + attendCnt);
+        System.out.println("[회원 번호:" + memberNo + "] " + name + "의 출석 횟수는 " + attendCnt + "회입니다.");
+    }
+
+
+
+}
+```
+
+> MemberRegistry (코드 변경 후)
+```java
+package checkTest;
+
+class MemberRegistry {
+
+    int limitCnt=5;
+    private Member[] members = new Member[limitCnt];
+
+    public void add(Member member) {
+        if(curCnt() >= limitCnt) {
+            System.out.println("최대 5명까지 저장할 수 있습니다. (등록 불가)");
+            return;
+        }
+        members[curCnt()] = member;
+    }
+
+    public void printMembers() {
+        for(int k=0; k<curCnt(); k++) {
+            Member member = members[k];
+            member.showMemberInfo();
+        }
+    }
+
+    public int curCnt() {
+        int cnt = 0;
+        for(Member member : members) {
+            if(member != null) cnt++;
+        }
+        return cnt;
+    }
+
+}
+```
+
 ## 문제 5. `static` 판단하기
 
 다음 항목을 `static`으로 만들어야 하는지 판단하고 이유를 적으세요.
