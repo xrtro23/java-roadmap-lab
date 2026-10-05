@@ -202,7 +202,7 @@ public class BankAccount {
 그리고 최조 입금액 조건이라던지, 출금 제약이란지 메서드 실행중에 판별하는 여러 조건들이 있어 내부에 두었음.
 
 ---
-# BankAccount
+> BankAccount
 ```java
 package checkTest;
 
@@ -264,7 +264,7 @@ public class BankAccount {
 }
 ```
 
-# BankAccount
+> BankAccount
 ```java
 package checkTest;
 
@@ -286,7 +286,7 @@ public class BankAccountTest {
 }
 ```
 
-# BankAccount
+> BankAccount
 ```java
 -- code
 ```
