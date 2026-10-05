@@ -286,11 +286,6 @@ public class BankAccountTest {
 }
 ```
 
-> BankAccount
-```java
--- code
-```
-
 예상결과)
 현재 잔액은 : 0원입니다.
 잔액보다 많은 금액을 출금할 수 없습니다.
@@ -298,6 +293,23 @@ public class BankAccountTest {
 
 검증) IntelliJ 검증 → 실패 : RUN 실행 2번 추가 더 진행하여 수정사항 반영 (생성자, 객체, 메서드 오류 수정 메서드 오류 수정)
 - this.owner = owner;  코드 및 메서드 기능 수정 보완
+
+검증) Chat GPT
+1) 생성자 로직 추가
+public BankAccount(String owner, int amount) {
+    if(owner == null || owner.isEmpty()) {
+        System.out.println("소유자 이름은 비어 있을 수 없습니다.");
+        return;
+    }
+    this.owner = owner;
+    deposit(amount);
+}
+
+2) 출금액은 0보다 커야 합니다 라는 로직 추가하라는 데.. 굳이 안넣어도 될거 같아 PASS
+3) 테스트 코드 오타 : bankAccount1.showBalance(); 중복 실행
+
+개인검증 추가) 다른 기능들 검증하는것 더 추가했었어야 했는데 생각을 못하였음.
+기능은 동작한것 확인함.
 
 ## 문제 4. 회원 출석 관리 프로그램
 
@@ -369,6 +381,11 @@ registry2.printMembers();
 - 철수의 출석 횟수는 1회입니다.
 
 ---
+
+> BankAccount
+```java
+-- code
+```
 
 ## 문제 5. `static` 판단하기
 
