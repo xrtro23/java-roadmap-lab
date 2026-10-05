@@ -382,9 +382,99 @@ registry2.printMembers();
 
 ---
 
-> BankAccount
+> Member (이전 코드) 
 ```java
--- code
+package checkTest;
+
+public class Member {
+
+    private String name;
+    private int memberNo;
+    private int attendCnt;
+    private static int sNo = 1;
+
+    public Member(String name) {
+        if(!name.isEmpty()) {
+            this.name = name;
+            this.memberNo = sNo;
+            sNo++;
+        }
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void checkAttend() {
+        attendCnt++;
+    }
+
+    public void showMemberInfo() {
+        System.out.println("이름 : " + name + ", 번호 : " + memberNo + ", 출석 횟수 : " + attendCnt);
+    }
+
+}
+```
+
+> MemberRegistry (이전 코드) 
+```java
+package checkTest;
+
+class MemberRegistry {
+
+    private static Member[] members;
+    //private static
+
+    public static void regist(Member member) {
+        if(members.length >= 5) {
+            System.out.println("최대 5명까지 저장할 수 있습니다. (등록 불가)");
+            return;
+        }
+        members[members.length-1] = member;
+    }
+
+    public void showMemberInfoAll() {
+        for(Member member : members) {
+            member.showMemberInfo();
+        }
+    }
+
+    public void checkCurMemberCnt() {
+        System.out.println("등록된 회원 수 : " + members.length);
+    }
+
+    public int findIdx(String name) {
+        int idx = 0;
+        for(Member member : members) {
+            if(member.getName().equals(name)) break;
+        }
+        return idx;
+    }
+
+}
+```
+
+> MemberTest (이전 코드) 
+```java
+package checkTest;
+
+public class MemberTest {
+    public static void main(String[] args) {
+
+        MemberRegistry.regist(new Member("최재영"));
+        MemberRegistry.regist(new Member("시루떡"));
+        MemberRegistry.checkCurMemberCnt();
+        int idx = MemberRegistry.findIdx("시루떡");
+
+        MemberRegistry.regist(new Member("엔쵸"));
+        MemberRegistry.regist(new Member("RANI"));
+        MemberRegistry.regist(new Member("goraniyam"));
+        MemberRegistry.regist(new Member("당근"));
+        MemberRegistry.checkCurMemberCnt();
+
+
+    }
+}
 ```
 
 예상결과) 실행 전 보이는 IntelliJ 빨간줄 오류 확인 등으로 작업하다 이상해서, 더 내려보니 실행 결과문이 정해져 있는것도 보여서..
