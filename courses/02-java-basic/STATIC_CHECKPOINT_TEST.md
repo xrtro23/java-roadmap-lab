@@ -201,12 +201,30 @@ public class BankAccount {
 → BankAccount의 멤버 변수인 소유자와 잔액의 경우 외부에서 직접 변경할수 없어야 하기에, private로 사용하였다.
 그리고 최조 입금액 조건이라던지, 출금 제약이란지 메서드 실행중에 판별하는 여러 조건들이 있어 내부에 두었음.
 
+---
+
+```java
+public class BankAccount232323 {
+    public String owner;
+    public int balance;
+
+    public BankAccount() {
+    }
+
+    public void deposit(int amount) {
+        balance += amount;
+    }
+
+    public void withdraw(int amount) {
+        balance -= amount;
+    }
+}
+```
+
 예상결과)
 현재 잔액은 : 0원입니다.
 잔액보다 많은 금액을 출금할 수 없습니다.
 현재 잔액은 : 20000원입니다.
-
----
 
 검증) IntelliJ 검증 → 실패 : RUN 실행 2번 추가 더 진행하여 수정사항 반영 (생성자, 객체, 메서드 오류 수정 메서드 오류 수정)
 - this.owner = owner;  코드 및 메서드 기능 수정 보완
