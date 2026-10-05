@@ -202,23 +202,93 @@ public class BankAccount {
 그리고 최조 입금액 조건이라던지, 출금 제약이란지 메서드 실행중에 판별하는 여러 조건들이 있어 내부에 두었음.
 
 ---
-
+# BankAccount
 ```java
-public class BankAccount232323 {
-    public String owner;
-    public int balance;
+package checkTest;
 
-    public BankAccount() {
+public class BankAccount {
+    private String owner;
+    private int balance;
+    private int cashCnt;
+
+    public BankAccount(String owner, int amount) {
+        if(owner.isEmpty()) {
+            System.out.println("계좌를 만들 때 소유자 이름은 반드시 받아야 합니다.");
+            return;
+        }
+        this.owner = owner;
+
+        checkAmount(amount);
+        deposit(amount);
     }
 
     public void deposit(int amount) {
+        String msg = checkAmount(amount);
+        if(!msg.equals("Success")) return;
         balance += amount;
+        cashCnt++;
     }
 
     public void withdraw(int amount) {
+        String msg = checkAmount(amount);
+        if(!msg.equals("Success")) return;
+        msg = checkWithDrawBalance(amount);
+        if(!msg.equals("Success")) return;
         balance -= amount;
+        cashCnt++;
     }
+
+    public String checkAmount(int amount) {
+        String msg = "Success";
+        if (amount <= 0) {
+            msg = "입금액은 0보다 커야 합니다.";
+            if(cashCnt == 0 && amount < 0) msg = "최초 입금액은 음수가 될 수 없습니다.";
+        }
+        if(!msg.equals("Success")) System.out.println(msg);
+        return msg;
+    }
+
+    public String checkWithDrawBalance(int amount) {
+        String msg = "Success";
+        if(balance-amount < 0) {
+            msg = "잔액보다 많은 금액을 출금할 수 없습니다.";
+            System.out.println(msg);
+        }
+        return msg;
+    }
+
+    public void showBalance() {
+        System.out.println("현재 잔액은 : " + balance + "원입니다.");
+    }
+
 }
+```
+
+# BankAccount
+```java
+package checkTest;
+
+public class BankAccountTest {
+    public static void main(String[] args) {
+        BankAccount bankAccount1 = new BankAccount("시루떡",20000);
+        BankAccount bankAccount2 = new BankAccount("RANI",10000);
+
+        bankAccount1.deposit(10000);
+        bankAccount1.withdraw(30000);
+        bankAccount1.showBalance();
+
+        bankAccount2.deposit(10000);
+        bankAccount2.withdraw(30000);
+        bankAccount2.showBalance();
+
+    }
+
+}
+```
+
+# BankAccount
+```java
+-- code
 ```
 
 예상결과)
