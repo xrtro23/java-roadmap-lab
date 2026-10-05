@@ -264,7 +264,7 @@ public class BankAccount {
 }
 ```
 
-> BankAccount
+> BankAccountTest
 ```java
 package checkTest;
 
