@@ -18,9 +18,46 @@ ex) https://example.com/expBuyPrint?pageNm=buyPrint&BOrderCd=F-B-20261105-0001&e
 A) 적용 가능. 예시) https://tinyurl.com/abc123
 But. 단순 공유용이면 DB에 저장하고 자체 토큰으로 URL 불러오는 방식이 더 나을수 있음.
 
+#  높은 가용성과 규모 확장성, 장애 감내가 요구됨의 예시
+Q) 단축 URL 에서의 높은 가용성과 규모 확장성, 장애 감내가 요구됨의 예시를 알려줘
+A) 높은 가용성 : 서비스가 언제든지 정상적으로 작동 ex) 사용자가 단축 URL에 접속하면 언제든 원본 URL로 이동
+규모 확장성 : 사용자가 많아지더라도 서비스를 안정적으로 처리 // 개략적 추정과 유사한 내용
+장애 감내 : 일부 시스템에 장애가 발생해도 전체 서비스가 중단되면 안됨 ex) 서버 A가 고장 나면 서버 B가 대신 단축 URL 리다이렉션을 처리
+
+# API 엔드포인트 
+클라이언트가 서버의 특정 기능을 사용하기 위해 요청하는 URL 주소.
+URL 단축용 (POST) : 긴 URL을 서버에 전달하면 단축 URL을 생성하여 반환.
+URL 리디렉션용 (GET) : 단축 URL로 접속하면 서버에서 원본 URL을 조회하여 해당 주소로 이동시킴.
+
+Q) RESTful API 방식 과 아닌 것 예시를 들어서 설명해줘. md 파일 표 형태로 정리 부탁해
+A) RESTful API 방식
+클라이언트가 서버의 특정 기능을 사용하기 위해 요청하는 URL 주소.
+RESTful API는 자원(Resource)을 중심으로 URL을 설계하고, HTTP 메서드를 통해 동작을 구분한다.
+
+| 구분 | RESTful API | 비RESTful API 예시 |
+|---|---|---|
+| URL 특징 | 자원(명사) 중심 | 동작(동사) 중심 |
+| 조회 | `GET /api/users/10` | `GET /api/getUser?id=10` |
+| 생성 | `POST /api/users` | `POST /api/createUser` |
+| 수정 | `PUT /api/users/10` | `POST /api/updateUser` |
+| 삭제 | `DELETE /api/users/10` | `POST /api/deleteUser` |
+
+| 기능 | RESTful 방식 | 동작 중심 방식 |
+|---|---|---|
+| 단축 URL 생성 | `POST /api/v1/urls` | `POST /api/v1/data/shorten` |
+| 단축 URL 조회 | `GET /api/v1/urls/abc123` | `GET /api/v1/getShortUrl?code=abc123` |
+| 단축 URL 삭제 | `DELETE /api/v1/urls/abc123` | `POST /api/v1/deleteShortUrl` |
+| 리디렉션 | `GET /abc123` | `GET /api/v1/redirect?code=abc123` |
+
+* 정리
+- RESTful API : URL은 자원(명사), HTTP 메서드는 행위(GET, POST, PUT, DELETE)를 표현한다.
+- 비RESTful API : REST 설계 원칙을 따르지 않는 API를 의미한다.
+- RESTful API는 URL만으로 결정되지 않으며 무상태성, 일관된 인터페이스 등의 원칙도 고려해야 한다.
+- URL에 동사가 포함되었다고 무조건 비RESTful인 것은 아니다.
+- 단축 URL의 리디렉션은 GET 요청을 통해 원본 URL로 이동시키는 기능이다.
 
 
-
+참고로 POST는 데이터를 전달해 생성하는 용도, GET은 데이터를 조회하는 용도로 주로 사용돼.
 1. CAP 정리 : 이해는 되었으나 CA 시스템이 불가능한 추가 이유 및 상세 설명 듣기 위한 목적
 2. 데이터 일관성의 N W R : 일관성 수준에 따라 W, R, N 값 조정은 이해되었으나 추가 설명을 위해 사용
 3. 데이터 버저닝과 벡터 시계 : 개념이 생소함
