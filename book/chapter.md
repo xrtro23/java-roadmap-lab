@@ -9,6 +9,35 @@
 
 ## 핵심 내용
 
+# URL 단축
+: URL 짧게 줄임
+
+# URL 리디렉션 (리다이렉션)
+: 단축 URL로 HTTP 요청이 오면 원래 URL로 안내
+
+- 301 응답 : Permanently Moved
+HTTP 요청 처리 책임이 영구적으로 Location 헤더에 반환된 URL로 이전
+같은 단축 URL 요청시 캐시 사용함
+장점 : 
+
+- 302 응답 : Found
+주어진 URL로의 요청이 일시적으로 Location 헤더가 지정하는 URL에 의해 처리되어야 함
+무조건 단축 URL 서버에 보내진 후, 원래 URL로 리디렉션 되어야 함
+
+각 장단점
+
+
+# API 엔드포인트
+: 클라이언트가 서버의 특정 기능을 사용하기 위해 요청하는 URL 주소, API 엔드포인트를 통해 서버와 통신함 // ex) RESTful API 방식
+- URL 단축용 엔드포인트 : 단축할 URL 파라미터 보냄 (POST 요청) // ex) POST/api/v1/data/shorten
+* 인자 : longUrl : longUrlstring / 반환 : 단축 URL
+- URL 리디렉션용 엔드포인트 : 원래 URL로 보내주기 위한 용도 (HTTP 요청) // ex) GET/api/v1/shortUrl
+
+# URL 단축 플로
+단축 URL 입력 (브라우저) → 원래 URL 변환 (URL 받은 서버) → 301 응답 반환 → 원래 URL 방문
+
+
+
 <!-- 이 장에서 다룬 개념을 내 언어로 정리. 책 문장을 옮겨 적지 말고 재구성할 것. -->
 
 ### {개념 1}
